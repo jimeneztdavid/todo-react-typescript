@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Formik, Field, Form, FormikHelpers } from 'formik'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 interface formValues {
-  email: String,
-  password: String,
-  passwordConfirmation: String
+  email: string,
+  password: string,
+  passwordConfirmation: string
 }
 
 export default function RegisterForm() {
+  const auth = getAuth();
 
   const initialValues: formValues = {
     email: '',
@@ -19,6 +21,22 @@ export default function RegisterForm() {
   const register = (values: formValues, actions: FormikHelpers<formValues>) => {
     console.log({ values, actions });
     alert(JSON.stringify(values, null, 2));
+    
+    createUserWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        // ..
+      });
+
+
     actions.setSubmitting(false);
   }
 
