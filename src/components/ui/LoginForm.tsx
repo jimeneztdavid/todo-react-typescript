@@ -28,7 +28,7 @@ export default function LoginForm() {
               </div>
 
               <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center">
-                  <a href="#" className="inline-block text-blue-500 hover:text-blue-800 hover:underline">Forgot your password?</a>
+                  {/* <a href="javascript:;" className="inline-block text-blue-500 hover:text-blue-800 hover:underline">Forgot your password?</a> */}
                   <button
                     type="submit"
                     className="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
