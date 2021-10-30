@@ -1,9 +1,9 @@
-import { initializeApp } from "firebase/app";
-
 export const firebaseConfig = {
-   
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
 };
 
-
-
-const firebase = initializeApp(firebaseConfig);

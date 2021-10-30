@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../AuthContext'
 
 export default function LoginForm() {
+    const { currentUser }: any = useAuth();
+
     return (
         <form action="#">
             <div className="flex flex-col bg-white p-10 rounded-lg shadow space-y-6">
-              <h1 className="font-bold text-xl text-center">Log in to your account</h1>
+              <h1 className="font-bold text-xl text-center">Log in to your account: {currentUser}</h1>
 
               <div className="flex flex-col space-y-1">
                   <input
