@@ -1,7 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { firebaseConfig } from './firebase';
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword,
+    signOut
+} from "firebase/auth";
 
 initializeApp(firebaseConfig);
 
@@ -18,6 +24,25 @@ interface UserAuth {
 
 const AuthProvider = ({children}: {children: JSX.Element}) => {
     const auth = getAuth();
+    const [currentUser, setCurrentUser] = useState<object | false>()
+    const [isLogged, setIsLogged] = useState<true | false>(false)
+
+    useEffect(()=> {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              setCurrentUser(user)
+              setIsLogged(true)
+            } else {
+             setCurrentUser(false)
+             setIsLogged(false);
+            }
+          });
+    });
+
+    const log = () => {
+        setIsLogged(!isLogged)
+        console.log('login')
+    }
 
     const register = (userauth: UserAuth) => {
         createUserWithEmailAndPassword(auth, userauth.email, userauth.password)
@@ -33,11 +58,35 @@ const AuthProvider = ({children}: {children: JSX.Element}) => {
                 // console.log(errorMessage);
                 // ..
             });
-        }
+    }
+
+    const login = (userauth: UserAuth) => {
+        signInWithEmailAndPassword(auth, userauth.email, userauth.password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                setCurrentUser(user)
+                setIsLogged(true)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setCurrentUser(false)
+                setIsLogged(false)
+            });
+    }
+
+    const logOut = () => {
+        signOut(auth)
+    }
 
     let value = {
-        currentUser: 'David',
-        register
+        register,
+        login,
+        currentUser,
+        isLogged,
+        logOut,
+        log
     }
 
     return (
