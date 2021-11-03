@@ -23,10 +23,6 @@ export default function LoginForm() {
     })
   }
 
-  if(isLogged) {
-    return <Redirect to="/" />
-  }
-
   return (
     <Formik 
       initialValues={initialValues}

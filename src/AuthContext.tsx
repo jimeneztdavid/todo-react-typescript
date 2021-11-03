@@ -41,7 +41,7 @@ const AuthProvider = ({children}: {children: JSX.Element}) => {
 
     const log = () => {
         setIsLogged(!isLogged)
-        console.log('login')
+        console.log('login212')
     }
 
     const register = (userauth: UserAuth) => {
